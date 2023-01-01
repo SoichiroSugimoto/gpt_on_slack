@@ -7,23 +7,12 @@
 `$ docker compose up -d --build`
 
 
-
 - run docker container through docker compose
 
 `$ docker compose up`
 
 
-- stop docker container docker compose
-
-`$ docker compose down`
-
-
-- delete docker image
-
-`$ docker rmi [IMAGE ID]`
-
-
-- use bash on the docker container docker compose
+- use bash on the docker container through docker compose
 
 `$ docker compose exec python3 bash`
 
