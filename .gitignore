@@ -1,0 +1,6 @@
+#! /bin/bash
+
+cd src/interactive_slack_chat_bot
+# compress
+zip -r ../interactive_slack_chat_bot.zip ./*
+cd ..
