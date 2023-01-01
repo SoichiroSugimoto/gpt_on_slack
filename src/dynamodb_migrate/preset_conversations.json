@@ -1,0 +1,87 @@
+{
+	"m0":{
+		"contents": {
+			"link_names": false,
+			"metadata": "",
+			"mrkdwn": false,
+			"parse": "",
+			"reply_broadcast": false,
+			"thread_ts": "",
+			"unfurl_links": false,
+			"unfurl_media": false,
+			"contents": {
+				"attachments": "",
+				"blocks": "",
+				"text": ""
+			}
+		},
+		"as_user": false,
+		"icon_emoji": "",
+		"icon_url": "",
+		"username": ""
+	},
+	"m1":{
+		"blocks": [
+			{
+				"type": "actions",
+				"block_id": "actionblock789",
+				"elements": [
+					{
+						"type": "button",
+						"text": {
+							"type": "plain_text",
+							"text": "このBotについて知りたい"
+						},
+						"value": "block_actions_001"
+					},
+					{
+						"type": "button",
+						"text": {
+							"type": "plain_text",
+							"text": "このBotのコードを読みたい"
+						},
+						"value": "block_actions_002"
+					},
+					{
+						"type": "button",
+						"text": {
+							"type": "plain_text",
+							"text": "学習データ一覧"
+						},
+						"value": "block_actions_003"
+					}
+				]
+			}
+		],
+		"username": "Help Center"
+	},
+	"m2":{
+		"text": "インタラクティブなチャットボットです。",
+		"username": "このBotについて知りたい"
+	},
+	"m3":{
+		"text": "https://github.com/SoichiroSugimoto/slack-based_fine-tuning.git",
+		"username": "このBotのコードを読みたい"
+	},
+	"m4":{
+		"text": "未実装",
+		"username": "学習データ一覧"
+	},
+	"m999":{
+		"attachments": "",
+		"blocks": "",
+		"text": "",
+		"as_user": false,
+		"icon_emoji": "",
+		"icon_url": "",
+		"link_names": false,
+		"metadata": "",
+		"mrkdwn": false,
+		"parse": "",
+		"reply_broadcast": false,
+		"thread_ts": "",
+		"unfurl_links": false,
+		"unfurl_media": false,
+		"username": ""
+	}
+}
