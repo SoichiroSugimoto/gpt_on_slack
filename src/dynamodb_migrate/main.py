@@ -15,6 +15,6 @@ Conversation(message_id='m2', message=json.dumps(preset_conversations['m2']),
       request_type="block_actions", request_value='block_actions_001').save()
 Conversation(message_id='m3', message=json.dumps(preset_conversations['m3']),
       request_type="block_actions", request_value='block_actions_002').save()
-Conversation(message_id='m3', message=json.dumps(preset_conversations['m4']),
+Conversation(message_id='m4', message=json.dumps(preset_conversations['m4']),
       request_type="block_actions", request_value='block_actions_003').save()
 print('Done!')
