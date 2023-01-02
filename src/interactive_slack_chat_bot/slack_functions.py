@@ -1,3 +1,4 @@
+import os
 import requests
 
 slack_bot_token = os.getenv('SLACK_BOT_TOKEN')

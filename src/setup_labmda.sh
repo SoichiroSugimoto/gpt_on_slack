@@ -8,3 +8,9 @@ cd interactive_slack_chat_bot
 # compress
 zip -r ../interactive_slack_chat_bot.zip ./*
 cd ..
+
+if [ ! -f ./labmda_layer.zip ]; then
+  mkdir python
+  pip install -t ./python requests
+  zip -r ./labmda_layer.zip ./python
+fi
