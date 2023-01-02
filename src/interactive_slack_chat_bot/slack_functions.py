@@ -3,6 +3,13 @@ import requests
 
 slack_bot_token = os.getenv('SLACK_BOT_TOKEN')
 
+def post_channel_by_params(channel, params):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params["channel"] = channel
+
+  response = requests.post("https://slack.com/api/chat.postMessage", headers=slack_request_headers, params=params)
+  return (response.json())
+
 def post_channel_message(channel, message):
   slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
   params={

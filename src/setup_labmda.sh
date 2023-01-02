@@ -12,5 +12,6 @@ cd ..
 if [ ! -f ./labmda_layer.zip ]; then
   mkdir python
   pip install -t ./python requests
+  pip install -t ./python pynamodb
   zip -r ./labmda_layer.zip ./python
 fi
