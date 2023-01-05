@@ -1,20 +1,2 @@
-FROM python:3
+FROM amazon/aws-sam-cli-build-image-python3.9
 USER root
-
-RUN apt-get update
-RUN apt-get -y install locales && \
-    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
-ENV LANG ja_JP.UTF-8
-ENV LANGUAGE ja_JP:ja
-ENV LC_ALL ja_JP.UTF-8
-ENV TZ JST-9
-ENV TERM xterm
-
-RUN apt-get install -y vim less
-RUN apt install -y zip
-RUN pip install --upgrade pip
-RUN pip install --upgrade setuptools
-
-RUN pip install pynamodb python-dotenv
-RUN pip install --upgrade openai
-RUN pip install jupyterlab
