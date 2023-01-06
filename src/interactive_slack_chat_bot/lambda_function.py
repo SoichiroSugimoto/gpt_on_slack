@@ -46,11 +46,16 @@ def lambda_handler(event, context):
       'body': json.dumps( {'challenge': receive_payload['challenge'] } )
     }
   elif (receive_payload["type"] == "shortcut" or receive_payload["type"] == "block_actions"):
-    response = usage_guide(event)
+    slack.post_channel_message("C04G56FP3S7", "this is shortcut")
+    # response = usage_guide(event)
   elif (receive_payload["type"] == "event_callback" and
         receive_payload["event"]["user"] != "U04HAFAP9FW" and
         int(json.loads(event['headers']['X-Slack-Retry-Num'])) == 1):
-    request_text = receive_payload["event"]["text"].replace('<@U04HAFAP9FW>', '').replace('@chat bot sample', '')
+    request_text = ''
+    if ('thread_ts' in receive_payload["event"]):
+      request_text = slack.get_text_element_as_thread(receive_payload['event']['channel'], receive_payload['event']['thread_ts'])
+    else:
+      request_text = slack.get_text_element(receive_payload)
     reply_text = opai.openai_prompt(request_text)
     response = slack.post_channel_reply("C04G56FP3S7", reply_text, receive_payload["event"]["ts"])
   else:

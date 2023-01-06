@@ -3,6 +3,28 @@ import requests
 
 slack_bot_token = os.getenv('SLACK_BOT_TOKEN')
 
+def get_text_element(payload):
+  text = ''
+  for block in payload['event']['blocks']:
+    for element in block['elements']:
+      for e in element['elements']:
+        if (e['type'] == 'text'):
+          text = e['text']
+          return (text)
+  return (text)
+
+def get_text_element_as_thread(channel, ts):
+  conversation = ''
+  response = get_channel_thread(channel, ts)
+  for message in response['messages']:
+    for block in message['blocks']:
+      for element in block['elements']:
+        for element in element['elements']:
+          if (element['type'] == 'text'):
+            conversation += element['text']
+            conversation += '\n\n\n\n'
+  return (conversation)
+
 def post_channel_by_params(channel, params):
   slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
   params["channel"] = channel
