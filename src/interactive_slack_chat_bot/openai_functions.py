@@ -7,7 +7,7 @@ openai.Model.list()
 def openai_prompt(prompt):
   openai_request_headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + OPENAI_API_KEY
+      "Authorization": "Bearer " + openai.api_key
       }
 
   response = openai.Completion.create(

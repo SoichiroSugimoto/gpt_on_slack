@@ -5,6 +5,7 @@ import ast
 from urllib import parse
 
 import slack_functions as slack
+import openai_functions as opai
 
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute, NumberAttribute, MapAttribute
@@ -33,14 +34,12 @@ def usage_guide(receive_payload):
   return (res)
 
 def lambda_handler(event, context):
+  receive_body = []
   try:
     receive_body = parse.parse_qs(event['body'])
     receive_payload = json.loads(receive_body["payload"][0])
   except:
     receive_payload = json.loads(event['body'])
-  retry_num = int(json.loads(event['headers']['X-Slack-Retry-Num']))
-  if (retry_num >= 2):
-    return (None)
   if (receive_payload['type'] == 'url_verification'):
     return {
       'statusCode': 200,
@@ -48,9 +47,12 @@ def lambda_handler(event, context):
     }
   elif (receive_payload["type"] == "shortcut" or receive_payload["type"] == "block_actions"):
     response = usage_guide(event)
-  elif (receive_payload["type"] == "event_callback" and receive_payload["event"]["user"] != "U04HAFAP9FW" and retry_num == 1):
-    response = slack.post_channel_reply("C04G56FP3S7", "こんにちは。", receive_payload["event"]["ts"])
+  elif (receive_payload["type"] == "event_callback" and
+        receive_payload["event"]["user"] != "U04HAFAP9FW" and
+        int(json.loads(event['headers']['X-Slack-Retry-Num'])) == 1):
+    request_text = receive_payload["event"]["text"].replace('<@U04HAFAP9FW>', '').replace('@chat bot sample', '')
+    reply_text = opai.openai_prompt(request_text)
+    response = slack.post_channel_reply("C04G56FP3S7", reply_text, receive_payload["event"]["ts"])
   else:
     response == None
   return (response)
-    
