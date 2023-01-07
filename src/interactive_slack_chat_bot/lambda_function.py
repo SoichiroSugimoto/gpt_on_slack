@@ -18,17 +18,19 @@ def usage_guide(receive_payload, channel):
   if (receive_payload['type'] == "shortcut"):
     callback_id = receive_payload['callback_id']
     data = conversations.get_item( Key={'message_id':callback_id} )
-    if ('Item' in data):
+    if (callback_id == 'modal_001'):
+      modal = data['Item']['message']
+      slack.open_modal(receive_payload['trigger_id'], modal)
+    else:
       message = data['Item']['message']
       value = json.dumps(json.loads(message)["blocks"])
       res = slack.post_channel_by_params(channel, {"blocks": value})
   elif (receive_payload['type'] == "block_actions"):
     action_value = receive_payload['actions'][0]["value"]
     data = conversations.get_item( Key={'message_id':action_value} )
-    if ('Item' in data):
-      message = data['Item']['message']
-      value = json.loads(message)
-      res = slack.post_channel_by_params(channel, value)
+    message = data['Item']['message']
+    value = json.loads(message)
+    res = slack.post_channel_by_params(channel, value)
   else:
     res = slack.post_channel_message(channel, "無効なリクエストです。")
   return (res)
@@ -58,8 +60,6 @@ def lambda_handler(event, context):
       request_text = slack.get_text_element(receive_payload)
     reply_text = opai.openai_prompt(request_text)
     response = slack.post_channel_reply("C04G56FP3S7", reply_text, receive_payload["event"]["ts"])
-  else:
-    response == None
   else:
     response = usage_guide(receive_payload, channel)
   return (response)
