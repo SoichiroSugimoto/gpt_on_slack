@@ -20,7 +20,7 @@
 		"icon_url": "",
 		"username": ""
 	},
-	"m1":{
+	"shortcut_001":{
 		"blocks": [
 			{
 				"type": "actions",
@@ -55,15 +55,15 @@
 		],
 		"username": "Help Center"
 	},
-	"m2":{
+	"block_actions_001":{
 		"text": "インタラクティブなチャットボットです。",
 		"username": "このBotについて知りたい"
 	},
-	"m3":{
+	"block_actions_002":{
 		"text": "https://github.com/SoichiroSugimoto/slack-based_fine-tuning.git",
 		"username": "このBotのコードを読みたい"
 	},
-	"m4":{
+	"block_actions_003":{
 		"text": "未実装",
 		"username": "学習データ一覧"
 	},
