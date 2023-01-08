@@ -32,11 +32,11 @@ def usage_guide(receive_payload, channel):
     value = json.loads(message)
     res = slack.post_channel_by_params(channel, value)
   else:
-    res = slack.post_channel_message(channel, "無効なリクエストです。")
+    res = slack.post_channel_message(channel, "無効なリクエストです。" + receive_payload)
   return (res)
 
 def lambda_handler(event, context):
-  channel = "C04G56FP3S7"
+  channel = "C04HQ5GFYHL"
   receive_body = []
   try:
     receive_body = parse.parse_qs(event['body'])
@@ -53,13 +53,14 @@ def lambda_handler(event, context):
   elif (receive_payload["type"] == "event_callback" and
         receive_payload["event"]["user"] != "U04HAFAP9FW" and
         int(json.loads(event['headers']['X-Slack-Retry-Num'])) == 1):
+    channel = receive_payload['event']['channel']
     request_text = ''
     if ('thread_ts' in receive_payload["event"]):
-      request_text = slack.get_text_element_as_thread(receive_payload['event']['channel'], receive_payload['event']['thread_ts'])
+      request_text = slack.get_text_element_as_thread(channel, receive_payload['event']['thread_ts'])
     else:
       request_text = slack.get_text_element(receive_payload)
     reply_text = opai.openai_prompt(request_text)
-    response = slack.post_channel_reply("C04G56FP3S7", reply_text, receive_payload["event"]["ts"])
+    response = slack.post_channel_reply(channel, reply_text, receive_payload["event"]["ts"])
   else:
     response = usage_guide(receive_payload, channel)
   return (response)
