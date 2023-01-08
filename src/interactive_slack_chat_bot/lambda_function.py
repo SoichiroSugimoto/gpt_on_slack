@@ -13,6 +13,19 @@ from pynamodb.attributes import UnicodeAttribute, NumberAttribute, MapAttribute
 dynamodb = boto3.resource('dynamodb', region_name = 'ap-northeast-1')
 conversations = dynamodb.Table('Conversation')
 
+def modal_request(receive_payload, channel):
+  res = None
+  prompt = ''
+  completion = ''
+  for key in receive_payload['view']['state']['values'].keys():
+    if ('q1' in receive_payload['view']['state']['values'][key]):
+      prompt = receive_payload['view']['state']['values'][key]['q1']['value']
+    if ('a1' in receive_payload['view']['state']['values'][key]):
+      completion = receive_payload['view']['state']['values'][key]['a1']['value']
+  message = "「" + prompt + "」" + "と聞かれたら「" + completion + "」と答えます。"
+  res = slack.post_channel_message(channel, message)
+  return (res)
+
 def usage_guide(receive_payload, channel):
   res = None
   if (receive_payload['type'] == "shortcut"):
@@ -31,12 +44,14 @@ def usage_guide(receive_payload, channel):
     message = data['Item']['message']
     value = json.loads(message)
     res = slack.post_channel_by_params(channel, value)
+  elif (receive_payload['type'] == "view_submission"):
+    res = modal_request(receive_payload, channel)
   else:
     res = slack.post_channel_message(channel, "無効なリクエストです。" + receive_payload)
   return (res)
 
 def lambda_handler(event, context):
-  channel = "C04HQ5GFYHL"
+  channel = "C04G56FP3S7"
   receive_body = []
   try:
     receive_body = parse.parse_qs(event['body'])
