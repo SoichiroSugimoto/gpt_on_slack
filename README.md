@@ -23,4 +23,4 @@
 <br><br>
 ## Architecture
 
-![application-architecture](https://github.com/SoichiroSugimoto/slack-based_fine-tuning/blob/main/architecture.png)
+![application-architecture](https://github.com/SoichiroSugimoto/slack-based_fine-tuning/blob/demo/architecture.png)
