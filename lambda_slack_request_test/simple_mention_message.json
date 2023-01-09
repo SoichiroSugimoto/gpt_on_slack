@@ -1,0 +1,60 @@
+{"resource": "/"
+,"path": "/"
+,"httpMethod": "POST"
+,"headers": {
+    "Accept": "/"
+    ,"Accept-Encoding": "gzip,deflate"
+    ,"Content-Type": "application/json"
+    ,"Host": "mtke3bci65.execute-api.ap-northeast-1.amazonaws.com"
+    ,"User-Agent": "Slackbot 1.0 (+https://api.slack.com/robots)"
+    ,"X-Amzn-Trace-Id": "Root=1-63b832fb-6559c4b654d701322755838d"
+    ,"X-Forwarded-For": "54.159.195.69"
+    ,"X-Forwarded-Port": "443"
+    ,"X-Forwarded-Proto": "https"
+    ,"X-Slack-Request-Timestamp": "1673016058"
+    ,"X-Slack-Signature": "v0=6693b53f76918b1b850003c7cd3b212e99f904487071839c0150f97813d0ab61"}
+,"multiValueHeaders": {
+    "Accept": ["/"]
+    ,"Accept-Encoding": ["gzip,deflate"]
+    ,"Content-Type": ["application/json"]
+    ,"Host": ["mtke3bci65.execute-api.ap-northeast-1.amazonaws.com"]
+    ,"User-Agent": ["Slackbot 1.0 (+https://api.slack.com/robots)"]
+    ,"X-Amzn-Trace-Id": ["Root=1-63b832fb-6559c4b654d701322755838d"]
+    ,"X-Forwarded-For": ["54.159.195.69"]
+    ,"X-Forwarded-Port": ["443"]
+    ,"X-Forwarded-Proto": ["https"]
+    ,"X-Slack-Request-Timestamp": ["1673016058"]
+    ,"X-Slack-Signature": ["v0=6693b53f76918b1b850003c7cd3b212e99f904487071839c0150f97813d0ab61"]}
+,"queryStringParameters": null
+,"multiValueQueryStringParameters": null
+,"pathParameters": null
+,"stageVariables": null
+,"requestContext": {
+    "resourceId": "tkrjdgs7r2"
+    ,"resourcePath": "/"
+    ,"httpMethod": "POST"
+    ,"extendedRequestId": "eUznTE89NjMF2fQ="
+    ,"requestTime": "06/Jan/2023:14:40:59 +0000"
+    ,"path": "/chat_bot"
+    ,"accountId": "000505334922"
+    ,"protocol": "HTTP/1.1"
+    ,"stage": "chat_bot"
+    ,"domainPrefix": "mtke3bci65"
+    ,"requestTimeEpoch": 1673016059356
+    ,"requestId": "3e9dd181-e801-42c9-af86-fd519362ec3a"
+    ,"identity": {"cognitoIdentityPoolId": null
+    ,"accountId": null
+    ,"cognitoIdentityId": null
+    ,"caller": null
+    ,"sourceIp": "54.159.195.69"
+    ,"principalOrgId": null
+    ,"accessKey": null
+    ,"cognitoAuthenticationType": null
+    ,"cognitoAuthenticationProvider": null
+    ,"userArn": null
+    ,"userAgent": "Slackbot 1.0 (+https://api.slack.com/robots)"
+    ,"user": null}
+    ,"domainName": "mtke3bci65.execute-api.ap-northeast-1.amazonaws.com"
+    ,"apiId": "mtke3bci65"}
+,"body": "{\"token\":\"XHS4YFcw1RQWG7rKXKU3lN4b\",\"team_id\":\"T04FQP68JMD\",\"api_app_id\":\"A04H7MXE9C3\",\"event\":{\"client_msg_id\":\"640f797a-0158-4356-8da7-8608f885d46f\",\"type\":\"app_mention\",\"text\":\"@chat bot sample \\u5357\\u7c73\\u5927\\u9678\\u306b\\u306f\\u4f55\\u30f5\\u56fd\\u3042\\u308a\\u307e\\u3059\\u304b\\uff1f\",\"user\":\"U04G56CFZMZ\",\"ts\":\"1673016058.309099\",\"blocks\":[{\"type\":\"rich_text\",\"block_id\":\"KFnWZ\",\"elements\":[{\"type\":\"rich_text_section\",\"elements\":[{\"type\":\"user\",\"user_id\":\"U04HAFAP9FW\"},{\"type\":\"text\",\"text\":\" \\u3053\\u3093\\u306b\\u3064\\u306f\"}]}]}],\"team\":\"T04FQP68JMD\",\"channel\":\"C04G56FP3S7\",\"event_ts\":\"1673016058.309099\"},\"type\":\"event_callback\",\"event_id\":\"Ev04HTK2G010\",\"event_time\":1673016058,\"authorizations\":[{\"enterprise_id\":null,\"team_id\":\"T04FQP68JMD\",\"user_id\":\"U04HAFAP9FW\",\"is_bot\":true,\"is_enterprise_install\":false}],\"is_ext_shared_channel\":false,\"event_context\":\"4-eyJldCI6ImFwcF9tZW50aW9uIiwidGlkIjoiVDA0RlFQNjhKTUQiLCJhaWQiOiJBMDRIN01YRTlDMyIsImNpZCI6IkMwNEc1NkZQM1M3In0\"}"
+,"isBase64Encoded": false}

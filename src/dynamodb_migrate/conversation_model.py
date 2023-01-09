@@ -7,7 +7,7 @@ load_dotenv('.env')
 
 class Conversation(Model):
   class Meta:
-    table_name = 'conversation'
+    table_name = 'Conversation'
     region = 'ap-northeast-1'
     read_capacity_units = 1
     write_capacity_units = 1
@@ -17,4 +17,3 @@ class Conversation(Model):
   message_id = UnicodeAttribute(hash_key=True)
   message = UnicodeAttribute()
   request_type = UnicodeAttribute()
-  request_value = UnicodeAttribute()
