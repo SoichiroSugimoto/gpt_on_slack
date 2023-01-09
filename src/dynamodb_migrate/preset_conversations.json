@@ -82,6 +82,7 @@
 				"element": {
 					"type": "plain_text_input",
 					"action_id": "q1",
+					"multiline": true,
 					"placeholder": {
 						"type": "plain_text",
 						"text": "Placeholder text for single-line input"
