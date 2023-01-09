@@ -78,4 +78,7 @@ def lambda_handler(event, context):
     response = slack.post_channel_reply(channel, reply_text, receive_payload["event"]["ts"])
   else:
     response = usage_guide(receive_payload, channel)
-  return (response)
+  return {
+      'statusCode': 200,
+      'body': None
+    }
