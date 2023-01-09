@@ -53,4 +53,3 @@ def lambda_handler(event, context):
   else:
     response == None
   return (response)
-    
