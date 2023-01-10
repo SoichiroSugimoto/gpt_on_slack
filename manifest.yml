@@ -1,0 +1,48 @@
+display_information:
+  name: GPT Chat Bot
+  description: chat bot based on GPT
+  background_color: "#004492"
+features:
+  bot_user:
+    display_name: chat bot sample
+    always_online: false
+  shortcuts:
+    - name: ヘルプ
+      type: global
+      callback_id: shortcut_001
+      description: Botのヘルプ
+    - name: ファインチューニング
+      type: global
+      callback_id: modal_001
+      description: データ登録
+oauth_config:
+  scopes:
+    user:
+      - channels:history
+      - channels:read
+      - channels:write
+      - chat:write
+      - im:read
+    bot:
+      - commands
+      - app_mentions:read
+      - channels:history
+      - channels:join
+      - channels:manage
+      - chat:write
+      - channels:read
+      - im:history
+      - im:read
+      - im:write
+      - incoming-webhook
+settings:
+  event_subscriptions:
+    request_url: https://xxxxxxxxxx.amazonaws.com/chat_bot/
+    bot_events:
+      - app_mention
+  interactivity:
+    is_enabled: true
+    request_url: https://xxxxxxxxxx.amazonaws.com/chat_bot
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
