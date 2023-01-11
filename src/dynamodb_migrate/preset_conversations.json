@@ -56,7 +56,7 @@
 		"username": "Help Center"
 	},
 	"block_actions_001":{
-		"text": "インタラクティブなチャットボットです。",
+		"text": "OpenAI社のGPTという製品を利用したChatbotです。Slack上でメンションされた投稿に対して自動で返信をし、会話をすることができます。",
 		"username": "このBotについて知りたい"
 	},
 	"block_actions_002":{
@@ -64,7 +64,7 @@
 		"username": "このBotのコードを読みたい"
 	},
 	"block_actions_003":{
-		"text": "未実装",
+		"text": "COMMING SOON",
 		"username": "学習データ一覧"
 	},
 	"modal_001":{
