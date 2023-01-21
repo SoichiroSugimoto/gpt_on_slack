@@ -6,6 +6,19 @@ You can chat with it interactively. And, it will be your friend. 😉
 <br><br>
 ![usage](https://github.com/SoichiroSugimoto/slack-based_fine-tuning/blob/demo/demo.gif)
 
+## Preparation
+slack-based_fine-tuning/src/dynamodb_migrate/.env
+```
+aws_access_key_id=[aws_access_key_id]
+aws_secret_access_key=[aws_access_key_id]
+```
+
+Eenvironment variables on AWS Lambda
+```
+- SLACK_BOT_TOKEN
+- SLACK_CHANNEL
+- OPENAI_API_KEY
+```
 
 ## Docker compose and Docker usage
 - create docker image and run docker container docker compose
@@ -28,3 +41,8 @@ You can chat with it interactively. And, it will be your friend. 😉
 ## Architecture
 
 ![application-architecture](https://github.com/SoichiroSugimoto/slack-based_fine-tuning/blob/demo/architecture.png)
+
+
+<br><br>
+## Japanese Article
+![GPT-3.5 × AWS Lambda × Amazon DynamoDB × Amazon API Gatewayを使ったSlackのチャットボットをPythonで実装する](https://qiita.com/nosandone/items/831336aba63bafc536e5)
