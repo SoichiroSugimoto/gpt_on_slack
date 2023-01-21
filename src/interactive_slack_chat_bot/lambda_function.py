@@ -71,7 +71,7 @@ def usage_guide(receive_payload, channel):
   return (res)
 
 def lambda_handler(event, context):
-  channel = "C04G56FP3S7"
+  channel = os.getenv("SLACK_CHANNEL")
   receive_body = []
   try:
     receive_body = parse.parse_qs(event['body'])
@@ -86,7 +86,6 @@ def lambda_handler(event, context):
       'body': json.dumps( {'challenge': receive_payload['challenge'] } )
     }
   elif (receive_payload["type"] == "event_callback" and
-        receive_payload["event"]["user"] != "U04HAFAP9FW" and
         int(json.loads(event['headers']['X-Slack-Retry-Num'])) == 1):
     channel = receive_payload['event']['channel']
     request_text = ''
