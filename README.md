@@ -44,5 +44,5 @@ Eenvironment variables on AWS Lambda
 
 
 <br><br>
-## Japanese Article
-![GPT-3.5 × AWS Lambda × Amazon DynamoDB × Amazon API Gatewayを使ったSlackのチャットボットをPythonで実装する](https://qiita.com/nosandone/items/831336aba63bafc536e5)
+## 日本語記事
+[GPT-3.5 × AWS Lambda × Amazon DynamoDB × Amazon API Gatewayを使ったSlackのチャットボットをPythonで実装する](https://qiita.com/nosandone/items/831336aba63bafc536e5)
