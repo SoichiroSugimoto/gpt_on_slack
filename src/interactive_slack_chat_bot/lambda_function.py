@@ -38,12 +38,12 @@ def modal_request(receive_payload, channel):
     if ('a1' in receive_payload['view']['state']['values'][key]):
       completion = receive_payload['view']['state']['values'][key]['a1']['value']
   try:
-    res = put_item_on_trainingdb(prompt, completion, receive_payload['user']['username'])
+    put_item_on_trainingdb(prompt, completion, receive_payload['user']['username'])
     success_message = "ファインチューニング用のデータが新たに登録されました。"
-    slack.post_channel_message(channel, "無効なリクエストです。" + receive_payload)
+    res = slack.post_channel_message(channel, success_message)
   except:
     failed_message = "ファインチューニング用のデータ登録に失敗しました。再度、登録をおこなってください。"
-    slack.post_channel_message(channel, failed_message)
+    res = slack.post_channel_message(channel, failed_message)
   return (res)
 
 def usage_guide(receive_payload, channel):
