@@ -1,5 +1,10 @@
 import json
+from training_model import Training
 from conversation_model import Conversation
+
+if not Training.exists():
+  Training.create_table(read_capacity_units=1,
+                    write_capacity_units=1, wait=True)
 
 if not Conversation.exists():
   Conversation.create_table(read_capacity_units=1,

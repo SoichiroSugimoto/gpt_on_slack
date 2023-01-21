@@ -2,6 +2,7 @@ import os
 import json
 import boto3
 import ast
+import datetime
 from urllib import parse
 
 import slack_functions as slack
@@ -12,6 +13,20 @@ from pynamodb.attributes import UnicodeAttribute, NumberAttribute, MapAttribute
 
 dynamodb = boto3.resource('dynamodb', region_name = 'ap-northeast-1')
 conversations = dynamodb.Table('Conversation')
+trainings = dynamodb.Table('Training')
+
+def put_item_on_trainingdb(prompt, completion, username):
+  dt = datetime.datetime.now()
+  ts = datetime.datetime.timestamp(dt)
+  res = trainings.put_item(
+      Item = {
+        "training_id": str(ts),
+        "prompt": prompt,
+        "completion": completion,
+        "user": username
+      }
+  )
+  return (res)
 
 def modal_request(receive_payload, channel):
   res = None
@@ -22,8 +37,13 @@ def modal_request(receive_payload, channel):
       prompt = receive_payload['view']['state']['values'][key]['q1']['value']
     if ('a1' in receive_payload['view']['state']['values'][key]):
       completion = receive_payload['view']['state']['values'][key]['a1']['value']
-  message = "「" + prompt + "」" + "と聞かれたら「" + completion + "」と答えます。"
-  res = slack.post_channel_message(channel, message)
+  try:
+    res = put_item_on_trainingdb(prompt, completion, receive_payload['user']['username'])
+    success_message = "ファインチューニング用のデータが新たに登録されました。"
+    slack.post_channel_message(channel, "無効なリクエストです。" + receive_payload)
+  except:
+    failed_message = "ファインチューニング用のデータ登録に失敗しました。再度、登録をおこなってください。"
+    slack.post_channel_message(channel, failed_message)
   return (res)
 
 def usage_guide(receive_payload, channel):
