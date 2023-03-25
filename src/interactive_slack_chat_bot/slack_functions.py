@@ -1,84 +1,83 @@
 import os
-import json
-import boto3
-import ast
-from urllib import parse
+import requests
 
-import slack_functions as slack
-import openai_functions as opai
+slack_bot_token = os.getenv('SLACK_BOT_TOKEN')
 
-from pynamodb.models import Model
-from pynamodb.attributes import UnicodeAttribute, NumberAttribute, MapAttribute
+def open_modal(trigger_id, modal):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params={
+              "view": modal,
+              "trigger_id": trigger_id
+          }
+  response = requests.post("https://slack.com/api/views.open", headers=slack_request_headers, params=params)
+  return (response.json())
 
-dynamodb = boto3.resource('dynamodb', region_name = 'ap-northeast-1')
-conversations = dynamodb.Table('Conversation')
+def get_text_element(payload):
+  text = ''
+  for block in payload['event']['blocks']:
+    for element in block['elements']:
+      for e in element['elements']:
+        if (e['type'] == 'text'):
+          text = e['text']
+          return (text)
+  return (text)
 
-def modal_request(receive_payload, channel):
-  res = None
-  prompt = ''
-  completion = ''
-  for key in receive_payload['view']['state']['values'].keys():
-    if ('q1' in receive_payload['view']['state']['values'][key]):
-      prompt = receive_payload['view']['state']['values'][key]['q1']['value']
-    if ('a1' in receive_payload['view']['state']['values'][key]):
-      completion = receive_payload['view']['state']['values'][key]['a1']['value']
-  message = "「" + prompt + "」" + "と聞かれたら「" + completion + "」と答えます。"
-  res = slack.post_channel_message(channel, message)
-  return (res)
+def get_text_element_as_thread(channel, ts):
+  conversation = ''
+  response = get_channel_thread(channel, ts)
+  for message in response['messages']:
+    for block in message['blocks']:
+      for element in block['elements']:
+        for element in element['elements']:
+          if (element['type'] == 'text'):
+            conversation += element['text']
+            conversation += '\n\n\n\n'
+  return (conversation)
 
-def usage_guide(receive_payload, channel):
-  res = None
-  if (receive_payload['type'] == "shortcut"):
-    callback_id = receive_payload['callback_id']
-    data = conversations.get_item( Key={'message_id':callback_id} )
-    if (callback_id == 'modal_001'):
-      modal = data['Item']['message']
-      slack.open_modal(receive_payload['trigger_id'], modal)
-    else:
-      message = data['Item']['message']
-      value = json.dumps(json.loads(message)["blocks"])
-      res = slack.post_channel_by_params(channel, {"blocks": value})
-  elif (receive_payload['type'] == "block_actions"):
-    action_value = receive_payload['actions'][0]["value"]
-    data = conversations.get_item( Key={'message_id':action_value} )
-    message = data['Item']['message']
-    value = json.loads(message)
-    res = slack.post_channel_by_params(channel, value)
-  elif (receive_payload['type'] == "view_submission"):
-    res = modal_request(receive_payload, channel)
-  else:
-    res = slack.post_channel_message(channel, "無効なリクエストです。" + receive_payload)
-  return (res)
+def post_channel_by_params(channel, params):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params["channel"] = channel
 
-def lambda_handler(event, context):
-  channel = "C04G56FP3S7"
-  receive_body = []
-  try:
-    receive_body = parse.parse_qs(event['body'])
-    receive_payload = json.loads(receive_body["payload"][0])
-  except:
-    receive_payload = json.loads(event['body'])
-  if not ('type' in receive_payload):
-    res = slack.post_channel_message(channel, "Error")
-  elif (receive_payload['type'] == 'url_verification'):
-    return {
-      'statusCode': 200,
-      'body': json.dumps( {'challenge': receive_payload['challenge'] } )
-    }
-  elif (receive_payload["type"] == "event_callback" and
-        receive_payload["event"]["user"] != "U04HAFAP9FW" and
-        int(json.loads(event['headers']['X-Slack-Retry-Num'])) == 1):
-    channel = receive_payload['event']['channel']
-    request_text = ''
-    if ('thread_ts' in receive_payload["event"]):
-      request_text = slack.get_text_element_as_thread(channel, receive_payload['event']['thread_ts'])
-    else:
-      request_text = slack.get_text_element(receive_payload)
-    reply_text = opai.openai_prompt(request_text)
-    response = slack.post_channel_reply(channel, reply_text, receive_payload["event"]["ts"])
-  else:
-    response = usage_guide(receive_payload, channel)
-  return {
-      'statusCode': 200,
-      'body': None
-    }
+  response = requests.post("https://slack.com/api/chat.postMessage", headers=slack_request_headers, params=params)
+  return (response.json())
+
+def post_channel_message(channel, message):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params={
+              "channel": channel,
+              "text": message
+          }
+
+  response = requests.post("https://slack.com/api/chat.postMessage", headers=slack_request_headers, params=params)
+  return (response.json())
+
+def post_channel_reply(channel, message, ts):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params={
+              "channel": channel,
+              "text": message,
+              "channel": channel,
+              "thread_ts": ts
+          }
+
+  response = requests.post("https://slack.com/api/chat.postMessage", headers=slack_request_headers, params=params)
+  return (response.json())
+
+def get_channel_message(channel):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params = {
+    "channel": channel
+  }
+
+  response = requests.get("https://slack.com/api/conversations.history", headers=slack_request_headers, params=params)
+  return (response.json())
+
+def get_channel_thread(channel, ts):
+  slack_request_headers = {"Authorization": "Bearer " + slack_bot_token}
+  params = {
+    "channel": channel,
+    "ts": ts
+  }
+
+  response = requests.get("https://slack.com/api/conversations.replies", headers=slack_request_headers, params=params)
+  return (response.json())
