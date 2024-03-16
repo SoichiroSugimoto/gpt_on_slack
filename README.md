@@ -1,4 +1,4 @@
-# slack-based_fine-tuning
+# gpt_on_slack
 This is AI chatbot using GPT from [OpenAI](https://openai.com/). It is working on Slack and triggered by mention.
 
 You can chat with it interactively. And, it will be your friend. 😉
